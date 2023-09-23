@@ -33,16 +33,12 @@ public class GridBehavior : MonoBehaviour
         {
             for(int y = 0; y < size.y; y++)
             {
-                Vector3 position = grid.GetCellCenterWorld(new Vector3Int(x, y));
-                GameObject spawnedTile = Instantiate(GetRandomCell(), position, Quaternion.identity, transform);
-                spawnedTile.name = "Tile" + x + y;
-                // bool isExploredCell = false; 
-                bool isExploredCell = true; // ненадолго добавил
-                if (x >= Mathf.FloorToInt((float)size.x / 2) - 1 && x <= Mathf.FloorToInt((float)size.x / 2) + 1 && 
-                    y >= Mathf.FloorToInt((float)size.y / 2) - 1 && y <= Mathf.FloorToInt((float)size.y / 2) + 1) 
-                    isExploredCell = true;
-                spawnedTile.GetComponent<Cell>().Init(Math.Abs(x + y) % 2 == 1, isExploredCell, new Vector2Int(x, y), cellType);
-                cells[x, y] = spawnedTile.GetComponent<Cell>();
+                GameObject spawnedCell = GetTerrain(x, y);
+
+                bool isExploredCell = IsExplored(x, y); 
+                
+                spawnedCell.GetComponent<Cell>().Init(Math.Abs(x + y) % 2 == 1, isExploredCell, new Vector2Int(x, y), cellType);
+                cells[x, y] = spawnedCell.GetComponent<Cell>();
             }
         }
     }
@@ -51,6 +47,31 @@ public class GridBehavior : MonoBehaviour
     {
         cellType = UnityEngine.Random.Range(0, initGeneratingCells + 1);
         return cellPrefabs[cellType];
+    }
+    private GameObject GetRandomCell(float _PerlinNoise)
+    {   
+        float resultNoise = _PerlinNoise * initGeneratingCells;
+        cellType = Mathf.RoundToInt(resultNoise);
+        cellType = UnityEngine.Random.Range(0f,1f) > 0.5f ? 0 : cellType;
+        return cellPrefabs[cellType];
+    } 
+    private GameObject GetTerrain(int x, int y)
+    {   
+        float sid = UnityEngine.Random.Range(0f, 9999999f);
+        float zoom = 70f;
+        float perlinNoise = Mathf.PerlinNoise((x + sid) / zoom, (y + sid) / zoom);
+        Vector3 position = grid.GetCellCenterWorld(new Vector3Int(x, y));
+        GameObject spawnedCell = Instantiate(GetRandomCell(perlinNoise), position, Quaternion.identity, transform);
+        spawnedCell.name = "Tile" + x + y;
+        return spawnedCell;
+    }
+    private bool IsExplored(int x, int y)
+    {
+        if (x >= Mathf.FloorToInt((float)size.x / 2) - 1 && x <= Mathf.FloorToInt((float)size.x / 2) + 1 && 
+            y >= Mathf.FloorToInt((float)size.y / 2) - 1 && y <= Mathf.FloorToInt((float)size.y / 2) + 1) 
+            return true;
+
+        return false;
     }
 }
 

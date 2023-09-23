@@ -39,7 +39,7 @@ public class Cell : MonoBehaviour
             spriteRenderer.color = isOffset ? offsetColor : baseColor;
         }
 
-        List<int> animatedCells = new List<int>(){ 0, 1, 2, 3, 6, 8, 10, 11, 12, 13, 14, 15 };
+        List<int> animatedCells = new List<int>(){ 0, 1, 2, 4, 6, 8, 10, 11, 12, 13, 14, 15 };
         if (animatedCells.Contains(type)) {
             anim.SetBool(grid.cellPrefabs[type].name, true);
             anim.SetFloat("Offset", UnityEngine.Random.Range(0f, 1f));
