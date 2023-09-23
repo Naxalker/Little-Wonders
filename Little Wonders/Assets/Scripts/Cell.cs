@@ -24,34 +24,33 @@ public class Cell : MonoBehaviour
     [SerializeField] private GridProperties gridProperties;
     private GridBehavior grid;
     private SpriteRenderer spriteRenderer;
-    private Animator animator;
+    private Animator anim;
+    private int type;
     #endregion
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         grid = GetComponentInParent<GridBehavior>();
-        animator = GetComponent<Animator>();
+        anim = GetComponent<Animator>();
     }
 
     public virtual void Start()
     {
-        if (animationName != "")
-        {
-            animator.SetBool(animationName, true);
-        }
+
     }
 
     public virtual void Update()
     {
-        
+
     }
 
-    public void Init(bool _isOffset, bool _isExplored, Vector2Int _coords)
+    public void Init(bool _isOffset, bool _isExplored, Vector2Int _coords, int _type)
     {
         isOffset = _isOffset;
         coordinates = _coords;
         isExplored = _isExplored;
+        type = _type;
 
         if (!isExplored)
         {
@@ -60,6 +59,12 @@ public class Cell : MonoBehaviour
         else
         {
             spriteRenderer.color = isOffset ? offsetColor : baseColor;
+        }
+
+        List<int> animatedCells = new List<int>(){ 0, 1, 2, 4, 6, 8, 10, 11, 12, 13, 14, 15 };
+        if (animatedCells.Contains(type)) {
+            anim.SetBool(grid.cellPrefabs[type].name, true);
+            anim.SetFloat("Offset", UnityEngine.Random.Range(0f, 1f));
         }
     }
 
