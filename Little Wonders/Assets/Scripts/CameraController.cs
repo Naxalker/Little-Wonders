@@ -22,20 +22,16 @@ public class CameraController : MonoBehaviour
     {
         cam = GetComponent<Camera>();
 
-        vertExtent = cam.orthographicSize;
-        horzExtent = vertExtent * Screen.width / Screen.height;
+        transform.position = new Vector3(gridProperties.size.x / 2, gridProperties.size.y / 2, -10f);
 
-        minX = horzExtent - gridProperties.size.x / 2;
-        maxX = gridProperties.size.x / 2 - horzExtent;
-        minY = vertExtent - gridProperties.size.y / 2;
-        maxY = gridProperties.size.x / 2 - vertExtent;
+        ResetBounce();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.position = Vector3.zero;
+            // transform.position = Vector3.zero;
             return;
         }
 
@@ -72,14 +68,19 @@ public class CameraController : MonoBehaviour
             zoom--;
         }
 
-        vertExtent = zoom;
-        horzExtent = vertExtent * Screen.width / Screen.height;
-        
-        minX = horzExtent - gridProperties.size.x / 2;
-        maxX = gridProperties.size.x / 2 - horzExtent;
-        minY = vertExtent - gridProperties.size.y / 2;
-        maxY = gridProperties.size.x / 2 - vertExtent;
+        ResetBounce();
 
         cam.orthographicSize = zoom;
+    }
+
+    private void ResetBounce()
+    {
+        vertExtent = cam.orthographicSize;
+        horzExtent = vertExtent * Screen.width / Screen.height;
+
+        minX = horzExtent;
+        maxX = gridProperties.size.x - horzExtent;
+        minY = vertExtent;
+        maxY = gridProperties.size.y - vertExtent;
     }
 }
