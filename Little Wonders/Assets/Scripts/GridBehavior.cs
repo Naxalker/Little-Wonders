@@ -14,8 +14,6 @@ public class GridBehavior : MonoBehaviour
     private int cellType;
     public Vector2Int size;
     public Cell[,] cells;
-    public int initGeneratingCells;
-
 
     private void Start()
     {
@@ -38,7 +36,7 @@ public class GridBehavior : MonoBehaviour
 
                 bool isExploredCell = IsExplored(x, y);
 
-                spawnedCell.GetComponent<Cell>().Init(Math.Abs(x + y) % 2 == 1, isExploredCell, new Vector2Int(x, y), cellType);
+                spawnedCell.GetComponent<Cell>().Init(Math.Abs(x + y) % 2 == 1, isExploredCell, new Vector2Int(x, y));
                 cells[x, y] = spawnedCell.GetComponent<Cell>();
             }
         }
@@ -52,18 +50,14 @@ public class GridBehavior : MonoBehaviour
         Destroy(_originCell.gameObject);
     }
 
-    private GameObject GetRandomCell()
-    {
-        cellType = UnityEngine.Random.Range(0, initGeneratingCells + 1);
-        return cellPrefabs[cellType];
-    }
     private GameObject GetRandomCell(float _PerlinNoise)
     {
-        float resultNoise = _PerlinNoise * initGeneratingCells;
+        float resultNoise = _PerlinNoise * (cellPrefabs.Count - 1);
         cellType = Mathf.RoundToInt(resultNoise);
-        cellType = UnityEngine.Random.Range(0f,1f) > 0.5f ? 0 : cellType;
+        cellType = UnityEngine.Random.Range(0f,1f) > 0.2f ? 0 : cellType;
         return cellPrefabs[cellType];
     }
+
     private GameObject GetTerrain(int x, int y)
     {
         float sid = UnityEngine.Random.Range(0f, 9999999f);
@@ -74,6 +68,7 @@ public class GridBehavior : MonoBehaviour
         spawnedCell.name = "Tile" + x + y;
         return spawnedCell;
     }
+
     private bool IsExplored(int x, int y)
     {
         if (x >= Mathf.FloorToInt((float)size.x / 2) - 1 && x <= Mathf.FloorToInt((float)size.x / 2) + 1 &&

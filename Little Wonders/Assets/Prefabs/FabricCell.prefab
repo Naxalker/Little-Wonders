@@ -13,6 +13,10 @@ PrefabInstance:
       value: FabricCell
       objectReference: {fileID: 0}
     - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: cooldown
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
       propertyPath: animationName
       value: Fabric
       objectReference: {fileID: 0}

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using System.Linq;
 
 public enum ResourceType
 {
@@ -13,10 +15,18 @@ public enum ResourceType
     Mood
 }
 
+[Serializable]
+public struct Resource
+{
+    public ResourceType resourceType;
+    public int resourceValue;
+    public TextMeshProUGUI resourceText;
+}
+
 public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager Instance;
-    private Dictionary<ResourceType, int> resources = new Dictionary<ResourceType, int>();
+    [SerializeField] private List<Resource> resources;
 
     private void Awake()
     {
@@ -25,14 +35,16 @@ public class ResourceManager : MonoBehaviour
 
     private void Start()
     {
-        foreach(ResourceType type in Enum.GetValues(typeof(ResourceType)))
+        foreach (Resource res in resources)
         {
-            resources.Add(type, 100);
+            res.resourceText.text = res.resourceValue.ToString();
         }
     }
 
     public void AddResource(ResourceType _resourceType, int _resourceValue)
     {
-        resources[_resourceType] += _resourceValue;
+        Resource res = resources.FirstOrDefault(x => x.resourceType == _resourceType);
+        res.resourceValue += _resourceValue;
+        res.resourceText.text = res.resourceValue.ToString();
     }
 }

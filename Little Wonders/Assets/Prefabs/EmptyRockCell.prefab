@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 595805450, guid: ae928e5d3cfd51746801391bd51aa9c2, type: 3}
     - target: {fileID: 5943939519001089245, guid: d8b0718f466a3f3469894a47b57324f1, type: 3}
       propertyPath: animationName
-      value: Rock
+      value: Mountain
       objectReference: {fileID: 0}
     - target: {fileID: 5943939519001089245, guid: d8b0718f466a3f3469894a47b57324f1, type: 3}
       propertyPath: availableCells.Array.size
