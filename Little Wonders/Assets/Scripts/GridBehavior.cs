@@ -7,6 +7,7 @@ public class GridBehavior : MonoBehaviour
 {
     [SerializeField] GridProperties gridProperties;
     public List<GameObject> cellPrefabs;
+    public List<GameObject> castlePrefabs;
 
     private Grid grid;
     private int cellType;
@@ -38,6 +39,23 @@ public class GridBehavior : MonoBehaviour
                 cells[x, y] = spawnedCell.GetComponent<Cell>();
             }
         }
+
+        SetPlaceForCastle();
+    }
+
+    private void SetPlaceForCastle()
+    {
+        int counter = 0;
+        int randX = UnityEngine.Random.Range(0, size.x - 2);
+        int randY = UnityEngine.Random.Range(0, size.y - 2);
+        
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                ReplaceCell(cells[randX + j, randY + i], castlePrefabs[counter++].GetComponent<Cell>());
+            }
+        }
     }
 
     public void ReplaceCell(Cell _originCell, Cell _newCell)
@@ -62,6 +80,13 @@ public class GridBehavior : MonoBehaviour
         float zoom = 70f;
         float perlinNoise = Mathf.PerlinNoise((x + sid) / zoom, (y + sid) / zoom);
         Vector3 position = grid.GetCellCenterWorld(new Vector3Int(x, y));
+        for (int i = 0; i < size.x - 2; i++)
+        {
+            for(int j = 0; j < size.y - 2; j++)
+            {
+                
+            }
+        }
         GameObject spawnedCell = Instantiate(GetRandomCell(perlinNoise), position, Quaternion.identity, transform);
         spawnedCell.name = "Tile" + x + y;
         return spawnedCell;
@@ -73,7 +98,7 @@ public class GridBehavior : MonoBehaviour
             y >= Mathf.FloorToInt((float)size.y / 2) - 1 && y <= Mathf.FloorToInt((float)size.y / 2) + 1)
             return true;
 
-        return false;
+        return true;
     }
 }
 

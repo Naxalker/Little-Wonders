@@ -78,6 +78,8 @@ public class BuildCanvas : MonoBehaviour
 
     private void HideUpgradePanel()
     {
+        // здесь изменил
+        selectedCell.GetHighlighter().SetActive(false);
         selectedCell = null;
         buildPanel.SetActive(false);
         foreach(Button button in buildButtons)

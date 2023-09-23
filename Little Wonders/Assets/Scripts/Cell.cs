@@ -47,7 +47,7 @@ public class Cell : MonoBehaviour
 
     public virtual void Start()
     {
-        
+
     }
 
     public virtual void Update()
@@ -63,7 +63,8 @@ public class Cell : MonoBehaviour
 
         if (!isExplored)
         {
-            spriteRenderer.color = Color.black;
+            // здесь изменил
+            spriteRenderer.color = new Color(0f, 0f, 0f, 0f);
         }
         else
         {
@@ -110,5 +111,11 @@ public class Cell : MonoBehaviour
         if (grid.cells[coordinates.x, (int)Mathf.Clamp(coordinates.y + 1, 0, gridProperties.size.y)].isExplored) return true;
 
         return false;
+    }
+
+    // здесь изменил
+    public GameObject GetHighlighter()
+    {
+        return highlight;
     }
 }
