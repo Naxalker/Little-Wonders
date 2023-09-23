@@ -32,6 +32,7 @@ public class ProducingCell : Cell
         {
             foreach (Production res in resources)
             {
+                Debug.Log(res.value);
                 ResourceManager.Instance.AddResource(res.resourceType, res.value);
             }
             startTime = Time.time;

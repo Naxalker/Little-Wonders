@@ -43,8 +43,21 @@ public class ResourceManager : MonoBehaviour
 
     public void AddResource(ResourceType _resourceType, int _resourceValue)
     {
-        Resource res = resources.FirstOrDefault(x => x.resourceType == _resourceType);
+        int targetIndex = resources.FindIndex(resource => resource.resourceType == _resourceType);
+        Resource res = resources[targetIndex];
         res.resourceValue += _resourceValue;
         res.resourceText.text = res.resourceValue.ToString();
+        resources[targetIndex] = res;
+    }
+
+    public bool EnoughResources(List<Cost> costs)
+    {
+        foreach(Cost cost in costs)
+        {
+            if (cost.value > resources.FirstOrDefault(x => x.resourceType == cost.resourceType).resourceValue)
+                return false;
+        }
+
+        return true;
     }
 }

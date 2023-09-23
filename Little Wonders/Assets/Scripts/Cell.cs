@@ -1,9 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public struct Cost
+{
+    public ResourceType resourceType;
+    public int value;
+}
+
 public class Cell : MonoBehaviour
 {
+    public List<Cost> costList;
+    public string descriptionText;
+
     #region Properties
     public List<Cell> availableCells;
     public bool isExplored { get; private set; }
@@ -52,7 +63,7 @@ public class Cell : MonoBehaviour
 
         if (!isExplored)
         {
-            spriteRenderer.color = new Color(0f,0f,0f);
+            spriteRenderer.color = Color.black;
         }
         else
         {

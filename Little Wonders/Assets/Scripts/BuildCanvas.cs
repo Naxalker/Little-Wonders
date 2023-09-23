@@ -40,6 +40,7 @@ public class BuildCanvas : MonoBehaviour
         {
             buildButtons[i].image.sprite = buildOptions[i].GetComponent<SpriteRenderer>().sprite;
             buildButtons[i].gameObject.SetActive(i < 3);
+            buildButtons[i].GetComponent<ButtonHoverCheck>().descriptionText = buildOptions[i].descriptionText;
         }
 
         nextButton.interactable = buildOptions.Count > 3;
@@ -62,9 +63,17 @@ public class BuildCanvas : MonoBehaviour
         if (selectedCell == null) return;
 
         Cell newCell = selectedCell.availableCells[index];
-        grid.ReplaceCell(selectedCell, newCell);
-        selectedCell = null;
-        HideUpgradePanel();
+
+        if (ResourceManager.Instance.EnoughResources(newCell.costList))
+        {
+            grid.ReplaceCell(selectedCell, newCell);
+            selectedCell = null;
+            HideUpgradePanel();
+            foreach(Cost cost in newCell.costList)
+            {
+                ResourceManager.Instance.AddResource(cost.resourceType, -cost.value);
+            }
+        }
     }
 
     private void HideUpgradePanel()

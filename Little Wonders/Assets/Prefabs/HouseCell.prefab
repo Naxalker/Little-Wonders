@@ -250,6 +250,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3433c5918d9a8b43b64ce7fae27d4dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  costList:
+  - resourceType: 1
+    value: 15
+  - resourceType: 4
+    value: 15
+  descriptionText: "\u0423\u043B\u0443\u0447\u0448\u0430\u0435\u0442 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D\u0438\u0435
+    \u043D\u0430\u0441\u0435\u043B\u0435\u043D\u0438\u044F."
   availableCells: []
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   offsetColor: {r: 1, g: 1, b: 1, a: 0.8}

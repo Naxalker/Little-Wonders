@@ -17,6 +17,10 @@ PrefabInstance:
       value: Mine
       objectReference: {fileID: 0}
     - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: descriptionText
+      value: "\u041F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u0442 \u043A\u0430\u043C\u0435\u043D\u044C."
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
       propertyPath: resources.Array.data[0].resourceType
       value: 3
       objectReference: {fileID: 0}
