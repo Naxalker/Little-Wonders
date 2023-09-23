@@ -28,4 +28,9 @@ public class Cell : MonoBehaviour
     {
         highlight.SetActive(false);
     }
+
+    private void OnMouseDown()
+    {
+        
+    }
 }
