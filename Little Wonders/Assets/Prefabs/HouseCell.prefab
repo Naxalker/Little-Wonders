@@ -73,8 +73,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 215f9fa6190380547816aa53a04a173d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Sprite: {fileID: 21300000, guid: e4cf1c3fcfd29d24e888f6ccdc7e74f6, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -94,11 +94,11 @@ GameObject:
   m_Component:
   - component: {fileID: 8842985964212289085}
   - component: {fileID: 4300825610371624092}
-  - component: {fileID: 4504399459105774293}
   - component: {fileID: 4317723638191383588}
   - component: {fileID: 5145548835439900685}
+  - component: {fileID: 2575776036106498303}
   m_Layer: 0
-  m_Name: Fabric
+  m_Name: HouseCell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1129512590, guid: ae928e5d3cfd51746801391bd51aa9c2, type: 3}
+  m_Sprite: {fileID: 1906274700, guid: ae928e5d3cfd51746801391bd51aa9c2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -172,21 +172,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &4504399459105774293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1467670884372305046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7e12cab46955984aad980825a00d1a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  baseColor: {r: 1, g: 1, b: 1, a: 1}
-  offsetColor: {r: 1, g: 1, b: 1, a: 0.8666667}
-  highlight: {fileID: 285639170078299611}
 --- !u!61 &4317723638191383588
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -253,3 +238,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2575776036106498303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1467670884372305046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3433c5918d9a8b43b64ce7fae27d4dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  availableCells: []
+  baseColor: {r: 1, g: 1, b: 1, a: 1}
+  offsetColor: {r: 1, g: 1, b: 1, a: 0.8}
+  highlight: {fileID: 285639170078299611}
+  animationName: 
+  gridProperties: {fileID: 11400000, guid: 24599723bd7b6674fb4e51daf0891162, type: 2}
+  resources:
+  - resourceType: 5
+    value: 5

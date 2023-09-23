@@ -4,20 +4,47 @@ using UnityEngine;
 
 public class Cell : MonoBehaviour
 {
-    [SerializeField] private Color baseColor, offsetColor;
+    #region Properties
+    public List<Cell> availableCells;
+    public bool isExplored { get; private set; }
+    public Vector2Int coordinates { get; private set; }
+    public bool isOffset { get; private set; }
+    #endregion
+
+    #region Visuals
+    [Header("Visuals")]
+    [SerializeField] private Color baseColor = Color.white;
+    [SerializeField] private Color offsetColor = new Color(1f, 1f, 1f, .8f);
     [SerializeField] GameObject highlight;
-    [SerializeField] GridBehavior grid;
+    [SerializeField] private string animationName;
+    #endregion
 
+    #region Components
+    [Header("Components")]
+    [SerializeField] private GridProperties gridProperties;
+    private GridBehavior grid;
     private SpriteRenderer spriteRenderer;
-    private Vector2Int coordinates;
-    private bool isOffset;
-
-    [HideInInspector] public bool isExplored = false;
+    private Animator animator;
+    #endregion
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         grid = GetComponentInParent<GridBehavior>();
+        animator = GetComponent<Animator>();
+    }
+
+    public virtual void Start()
+    {
+        if (animationName != "")
+        {
+            animator.SetBool(animationName, true);
+        }
+    }
+
+    public virtual void Update()
+    {
+        
     }
 
     public void Init(bool _isOffset, bool _isExplored, Vector2Int _coords)
@@ -38,7 +65,12 @@ public class Cell : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (IsNextToNeighbour())
+        if (BuildCanvas.Instance.CellIsSelected()) return;
+
+        if (isExplored)
+        {
+            BuildCanvas.Instance.ProcessUpgradePanel(this);
+        } else if (IsNextToNeighbor())
         {
             isExplored = true;
             spriteRenderer.color = isOffset ? offsetColor : baseColor;
@@ -47,20 +79,22 @@ public class Cell : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        highlight.SetActive(true);
+        if (!BuildCanvas.Instance.CellIsSelected())
+            highlight.SetActive(true);
     }
 
     private void OnMouseExit()
     {
-        highlight.SetActive(false);
+        if (!BuildCanvas.Instance.CellIsSelected())
+            highlight.SetActive(false);
     }
 
-    private bool IsNextToNeighbour()
+    private bool IsNextToNeighbor()
     {
-        if (grid.cells[(int)Mathf.Clamp(coordinates.x - 1, 0, grid.size.x), coordinates.y].isExplored) return true;
-        if (grid.cells[(int)Mathf.Clamp(coordinates.x + 1, 0, grid.size.x), coordinates.y].isExplored) return true;
-        if (grid.cells[coordinates.x, (int)Mathf.Clamp(coordinates.y - 1, 0, grid.size.y)].isExplored) return true;
-        if (grid.cells[coordinates.x, (int)Mathf.Clamp(coordinates.y + 1, 0, grid.size.y)].isExplored) return true;
+        if (grid.cells[(int)Mathf.Clamp(coordinates.x - 1, 0, gridProperties.size.x), coordinates.y].isExplored) return true;
+        if (grid.cells[(int)Mathf.Clamp(coordinates.x + 1, 0, gridProperties.size.x), coordinates.y].isExplored) return true;
+        if (grid.cells[coordinates.x, (int)Mathf.Clamp(coordinates.y - 1, 0, gridProperties.size.y)].isExplored) return true;
+        if (grid.cells[coordinates.x, (int)Mathf.Clamp(coordinates.y + 1, 0, gridProperties.size.y)].isExplored) return true;
 
         return false;
     }

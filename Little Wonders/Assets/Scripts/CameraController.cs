@@ -29,9 +29,11 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (BuildCanvas.Instance.CellIsSelected()) return;
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            // transform.position = Vector3.zero;
+            transform.position = new Vector3(gridProperties.size.x / 2, gridProperties.size.y / 2, -10f);
             return;
         }
 
@@ -60,6 +62,8 @@ public class CameraController : MonoBehaviour
 
     private void HandleMouseZoom() 
     {
+        if (Input.GetAxis("Mouse ScrollWheel") == 0) return;
+
         float zoom = cam.orthographicSize;
         if (Input.GetAxis("Mouse ScrollWheel") < 0 && vertExtent < maxSize) {
             zoom++;
