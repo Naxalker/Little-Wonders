@@ -10,7 +10,9 @@ public class Cell : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private Vector2Int coordinates;
+    private Animator anim;
     private bool isOffset;
+    private int type;
 
     [HideInInspector] public bool isExplored = false;
 
@@ -18,13 +20,15 @@ public class Cell : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         grid = GetComponentInParent<GridBehavior>();
+        anim = GetComponent<Animator>();
     }
 
-    public void Init(bool _isOffset, bool _isExplored, Vector2Int _coords)
+    public void Init(bool _isOffset, bool _isExplored, Vector2Int _coords, int _type)
     {
         isOffset = _isOffset;
         coordinates = _coords;
         isExplored = _isExplored;
+        type = _type;
 
         if (!isExplored)
         {
@@ -33,6 +37,12 @@ public class Cell : MonoBehaviour
         else
         {
             spriteRenderer.color = isOffset ? offsetColor : baseColor;
+        }
+
+        List<int> animatedCells = new List<int>(){ 0, 1, 2, 3, 6, 8, 10, 11, 12, 13, 14, 15 };
+        if (animatedCells.Contains(type)) {
+            anim.SetBool(grid.cellPrefabs[type].name, true);
+            anim.SetFloat("Offset", UnityEngine.Random.Range(0f, 1f));
         }
     }
 
