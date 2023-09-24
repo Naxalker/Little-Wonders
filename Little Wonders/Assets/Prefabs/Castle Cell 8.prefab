@@ -250,15 +250,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24b0b929ad87582499f52318e3c7a5c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellCost:
+    keys: 
+    values: 
+  originCell: {fileID: 0}
   availableCells:
-  - {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
-  - {fileID: 7557778025638133884, guid: c4c9566efdd19c94abc2d1a8d8002a6f, type: 3}
-  - {fileID: 2009206943482615237, guid: d01574890c85c1047839e9a1365e07d9, type: 3}
-  - {fileID: 4241755020904743186, guid: a42d2bb425174ef4aab154bd47ac2563, type: 3}
-  - {fileID: 8109363201776446595, guid: 40e36be9b6e33ad44b989b31cd0bfdea, type: 3}
-  - {fileID: 7812980592058739625, guid: 412af501bb7b21a4bb1198a980c953d1, type: 3}
+  - {fileID: 3082291864570526536, guid: f9b3fc83a93f1c142bdc87ca31a93b46, type: 3}
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   offsetColor: {r: 1, g: 1, b: 1, a: 0.8}
   highlight: {fileID: 285639170078299611}
   animationName: 
-  gridProperties: {fileID: 11400000, guid: 24599723bd7b6674fb4e51daf0891162, type: 2}
+  gridProperties: {fileID: 11400000, guid: 308b4594c32f2284a84b758dbae39915, type: 2}

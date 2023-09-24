@@ -1,19 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
-[Serializable]
-public struct Cost
-{
-    public ResourceType resourceType;
-    public int value;
-}
 
 public class Cell : MonoBehaviour
 {
-    public List<Cost> costList;
-    public string descriptionText;
+    public Dictionary<ResourceType, int> cellCost;
+    [HideInInspector] public Cell originCell;
 
     #region Properties
     public List<Cell> availableCells;
@@ -26,13 +20,12 @@ public class Cell : MonoBehaviour
     [Header("Visuals")]
     [SerializeField] private Color baseColor = Color.white;
     [SerializeField] private Color offsetColor = new Color(1f, 1f, 1f, .8f);
-    [SerializeField] GameObject highlight;
+    [SerializeField] private GameObject highlight;
     [SerializeField] private string animationName;
     #endregion
 
     #region Components
     [Header("Components")]
-    [SerializeField] private GridProperties gridProperties;
     private GridBehavior grid;
     private SpriteRenderer spriteRenderer;
     private Animator anim;
@@ -45,21 +38,12 @@ public class Cell : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public virtual void Start()
-    {
-
-    }
-
-    public virtual void Update()
-    {
-
-    }
-
-    public void Init(bool _isOffset, bool _isExplored, Vector2Int _coords)
+    public void Init(bool _isOffset, bool _isExplored, Vector2Int _coords, Cell _originCell)
     {
         isOffset = _isOffset;
         coordinates = _coords;
         isExplored = _isExplored;
+        originCell = _originCell;
 
         if (!isExplored)
         {
@@ -77,38 +61,59 @@ public class Cell : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    protected virtual void OnMouseDown()
     {
-        if (BuildCanvas.Instance.CellIsSelected()) return;
+        if (InteractionCanvas.Instance.CellIsSelected() || !GameManager.Instance.canControl) return;
 
-        if (isExplored)
+        if (!isExplored && IsNextToNeighbor())
         {
-            BuildCanvas.Instance.ProcessUpgradePanel(this);
-        } else if (IsNextToNeighbor())
+            if (ResourceManager.Instance.EnoughResources(Globals.Instance.exploreCost))
+                RevealCell();
+        } else
         {
-            isExplored = true;
-            spriteRenderer.color = isOffset ? offsetColor : baseColor;
+            SFXManager.Instance.PlaySFXPitched(1);
         }
     }
 
     private void OnMouseEnter()
     {
-        if (!BuildCanvas.Instance.CellIsSelected())
+        if (!GameManager.Instance.canControl) return;
+
+        if (!InteractionCanvas.Instance.CellIsSelected())
+        {
             highlight.SetActive(true);
+            if (!isExplored)
+            {
+                string text = "Исследовать <br> ";
+                foreach (var key in Globals.Instance.exploreCost.keys)
+                {
+                    text += Globals.Instance.exploreCost.GetValue(key) + "   " +
+                            Globals.Instance.IconDescription(Globals.Instance.resourceIndex.GetValue(key)) + " ";
+                }
+                DescriptionCanvas.Instance.ShowCanvas(text);
+            }
+            else 
+                DescriptionCanvas.Instance.HideCanvas();
+
+        }
     }
 
     private void OnMouseExit()
     {
-        if (!BuildCanvas.Instance.CellIsSelected())
+        if (!GameManager.Instance.canControl) return;
+
+        if (!InteractionCanvas.Instance.CellIsSelected())
+        {
             highlight.SetActive(false);
+        }
     }
 
-    private bool IsNextToNeighbor()
+    protected bool IsNextToNeighbor()
     {
-        if (grid.cells[(int)Mathf.Clamp(coordinates.x - 1, 0, gridProperties.size.x), coordinates.y].isExplored) return true;
-        if (grid.cells[(int)Mathf.Clamp(coordinates.x + 1, 0, gridProperties.size.x), coordinates.y].isExplored) return true;
-        if (grid.cells[coordinates.x, (int)Mathf.Clamp(coordinates.y - 1, 0, gridProperties.size.y)].isExplored) return true;
-        if (grid.cells[coordinates.x, (int)Mathf.Clamp(coordinates.y + 1, 0, gridProperties.size.y)].isExplored) return true;
+        if (grid.cells[(int)Mathf.Clamp(coordinates.x - 1, 0, grid.size.x - 1), coordinates.y].isExplored) return true;
+        if (grid.cells[(int)Mathf.Clamp(coordinates.x + 1, 0, grid.size.x - 1), coordinates.y].isExplored) return true;
+        if (grid.cells[coordinates.x, (int)Mathf.Clamp(coordinates.y - 1, 0, grid.size.y - 1)].isExplored) return true;
+        if (grid.cells[coordinates.x, (int)Mathf.Clamp(coordinates.y + 1, 0, grid.size.y - 1)].isExplored) return true;
 
         return false;
     }
@@ -117,5 +122,22 @@ public class Cell : MonoBehaviour
     public GameObject GetHighlighter()
     {
         return highlight;
+    }
+
+    public void RevealCell()
+    {
+        isExplored = true;
+        spriteRenderer.color = isOffset ? offsetColor : baseColor;
+        foreach(var key in Globals.Instance.exploreCost.keys)
+        {
+            ResourceManager.Instance.AddResource(key, -Globals.Instance.exploreCost.GetValue(key));
+        }
+        SFXManager.Instance.PlaySFXPitched(1);
+    }
+
+    public void HideCell()
+    {
+        isExplored = false;
+        spriteRenderer.color = new Color(0f, 0f, 0f, 0f);
     }
 }

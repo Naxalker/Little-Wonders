@@ -4,13 +4,19 @@ using UnityEngine;
 
 public class EmptyCell : Cell
 {
-    public override void Start()
+    protected override void OnMouseDown()
     {
-        base.Start();
-    }
+        if (InteractionCanvas.Instance.CellIsSelected() || !GameManager.Instance.canControl) return;
 
-    public override void Update()
-    {
-        base.Update();
+        if (isExplored)
+        {
+            InteractionCanvas.Instance.ProcessBuildPanel(this);
+            SFXManager.Instance.PlaySFXPitched(1);
+        }
+        else if (IsNextToNeighbor())
+        {
+            if (ResourceManager.Instance.EnoughResources(Globals.Instance.exploreCost))
+                RevealCell();
+        }
     }
 }

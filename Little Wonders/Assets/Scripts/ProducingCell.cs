@@ -3,37 +3,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[Serializable]
-public struct Production
-{
-    public ResourceType resourceType;
-    public int value;
-}
-
 public class ProducingCell : Cell
 {
-    [SerializeField] List<Production> resources;
+    public Dictionary<ResourceType, int> producedResources;
+
     [SerializeField] float cooldown;
 
     private float startTime;
 
-    public override void Start()
+    protected override void OnMouseDown()
     {
-        base.Start();
+        if (InteractionCanvas.Instance.CellIsSelected() || !GameManager.Instance.canControl) return;
 
+        if (isExplored)
+        {
+            SFXManager.Instance.PlaySFXPitched(1);
+            InteractionCanvas.Instance.ProcessDestroyPanel(this);
+        }
+        else if (IsNextToNeighbor())
+        {
+            if (ResourceManager.Instance.EnoughResources(Globals.Instance.exploreCost))
+                RevealCell();
+        }
+    }
+
+    private void Start()
+    {
         startTime = Time.time;
     }
 
-    public override void Update()
+    private void Update()
     {
-        base.Update();
-
         if (startTime + cooldown <= Time.time) 
         {
-            foreach (Production res in resources)
+            foreach(ResourceType type in producedResources.keys)
             {
-                Debug.Log(res.value);
-                ResourceManager.Instance.AddResource(res.resourceType, res.value);
+                ResourceManager.Instance.AddResource(type, producedResources.GetValue(type));
             }
             startTime = Time.time;
         }

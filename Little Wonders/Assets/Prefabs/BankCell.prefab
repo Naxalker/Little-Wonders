@@ -18,15 +18,60 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
       propertyPath: cooldown
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: gridProperties
+      value: 
+      objectReference: {fileID: 11400000, guid: 308b4594c32f2284a84b758dbae39915, type: 2}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: descriptionText
+      value: "\u041F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u0442 \u0434\u0435\u043D\u044C\u0433\u0438.
+        <sprite=1>"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: cellCost.keys.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: resources.keys.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: cellCost.values.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: cellCost.keys.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: cellCost.keys.Array.data[2]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: resources.keys.Array.data[0]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: cellCost.values.Array.data[1]
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
-      propertyPath: descriptionText
-      value: "\u041F\u0440\u043E\u0438\u0437\u0432\u043E\u0434\u0438\u0442 \u0434\u0435\u043D\u044C\u0433\u0438."
+      propertyPath: cellCost.values.Array.data[2]
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: producedResources.keys.Array.data[0]
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
       propertyPath: resources.Array.data[0].resourceType
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575776036106498303, guid: 15af58140d7e513499a06be0e248da45, type: 3}
+      propertyPath: producedResources.values.Array.data[0]
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4300825610371624092, guid: 15af58140d7e513499a06be0e248da45, type: 3}
       propertyPath: m_Sprite

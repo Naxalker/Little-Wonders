@@ -250,20 +250,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3433c5918d9a8b43b64ce7fae27d4dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  costList:
-  - resourceType: 1
-    value: 15
-  - resourceType: 4
-    value: 15
-  descriptionText: "\u0423\u043B\u0443\u0447\u0448\u0430\u0435\u0442 \u043D\u0430\u0441\u0442\u0440\u043E\u0435\u043D\u0438\u0435
-    \u043D\u0430\u0441\u0435\u043B\u0435\u043D\u0438\u044F."
+  cellCost:
+    keys: 0200000004000000
+    values: 0a0000000a000000
+  originCell: {fileID: 0}
   availableCells: []
   baseColor: {r: 1, g: 1, b: 1, a: 1}
   offsetColor: {r: 1, g: 1, b: 1, a: 0.8}
   highlight: {fileID: 285639170078299611}
   animationName: 
-  gridProperties: {fileID: 11400000, guid: 24599723bd7b6674fb4e51daf0891162, type: 2}
-  resources:
-  - resourceType: 5
-    value: 5
-  cooldown: 5
+  gridProperties: {fileID: 11400000, guid: 308b4594c32f2284a84b758dbae39915, type: 2}
+  producedResources:
+    keys: 05000000
+    values: 01000000
+  cooldown: 2

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] GridProperties gridProperties;
     [SerializeField] float camSpeed;
+    [SerializeField] GridBehavior grid;
 
     public float minSize, maxSize;
 
@@ -17,23 +17,22 @@ public class CameraController : MonoBehaviour
     private float vertExtent;
     private float horzExtent;
 
-
     private void Start()
     {
         cam = GetComponent<Camera>();
 
-        transform.position = new Vector3(gridProperties.size.x / 2, gridProperties.size.y / 2, -10f);
+        transform.position = new Vector3(grid.size.x / 2, grid.size.y / 2, -10f);
 
         ResetBounce();
     }
 
     private void Update()
     {
-        if (BuildCanvas.Instance.CellIsSelected()) return;
+        if (InteractionCanvas.Instance.CellIsSelected() || !GameManager.Instance.canControl) return;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            transform.position = new Vector3(gridProperties.size.x / 2, gridProperties.size.y / 2, -10f);
+            transform.position = new Vector3(grid.size.x / 2, grid.size.y / 2, -10f);
             return;
         }
 
@@ -72,9 +71,8 @@ public class CameraController : MonoBehaviour
             zoom--;
         }
 
-        ResetBounce();
-
         cam.orthographicSize = zoom;
+        ResetBounce();
     }
 
     private void ResetBounce()
@@ -83,8 +81,8 @@ public class CameraController : MonoBehaviour
         horzExtent = vertExtent * Screen.width / Screen.height;
 
         minX = horzExtent;
-        maxX = gridProperties.size.x - horzExtent;
+        maxX = grid.size.x - horzExtent;
         minY = vertExtent;
-        maxY = gridProperties.size.y - vertExtent;
+        maxY = grid.size.y - vertExtent;
     }
 }
