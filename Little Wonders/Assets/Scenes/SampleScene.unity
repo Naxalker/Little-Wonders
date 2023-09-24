@@ -4327,19 +4327,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a240519812fff04db119392004dbca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridProperties: {fileID: 11400000, guid: 308b4594c32f2284a84b758dbae39915, type: 2}
+  gridProperties: {fileID: 0}
   cellPrefabs:
+  - {fileID: 5423170572572637818, guid: 48af7e3b97a0789408f846a32e29d63e, type: 3}
   - {fileID: 1467670884372305046, guid: d8b0718f466a3f3469894a47b57324f1, type: 3}
   - {fileID: 5146196627654232298, guid: 40e36be9b6e33ad44b989b31cd0bfdea, type: 3}
-  - {fileID: 5423170572572637818, guid: 48af7e3b97a0789408f846a32e29d63e, type: 3}
   - {fileID: 1495236642907178219, guid: 8e78ed4365f6ba340922c5c395404828, type: 3}
   - {fileID: 4243804982463881119, guid: b599de6e306dbc44484476cb46396a4c, type: 3}
-  - {fileID: 1467670884372305046, guid: d8b0718f466a3f3469894a47b57324f1, type: 3}
-  - {fileID: 1467670884372305046, guid: d8b0718f466a3f3469894a47b57324f1, type: 3}
-  - {fileID: 1467670884372305046, guid: d8b0718f466a3f3469894a47b57324f1, type: 3}
-  - {fileID: 1467670884372305046, guid: d8b0718f466a3f3469894a47b57324f1, type: 3}
-  - {fileID: 1467670884372305046, guid: d8b0718f466a3f3469894a47b57324f1, type: 3}
-  - {fileID: 1467670884372305046, guid: d8b0718f466a3f3469894a47b57324f1, type: 3}
   castlePrefabs:
   - {fileID: 1467670884372305046, guid: 797d86ff65f4eb7459de2eff27eebaf8, type: 3}
   - {fileID: 1467670884372305046, guid: fca35274b8e15f846abd0921726a20be, type: 3}
@@ -4355,6 +4349,11 @@ MonoBehaviour:
   - {fileID: 3171355872985166252, guid: d01574890c85c1047839e9a1365e07d9, type: 3}
   - {fileID: 954048418956141947, guid: a42d2bb425174ef4aab154bd47ac2563, type: 3}
   size: {x: 25, y: 25}
+  freq: 0.651
+  waterFreq: 0.246
+  cowFreq: 0.316
+  rockFreq: 0.359
+  oilFreq: 0.392
 --- !u!156049354 &1778967340
 Grid:
   m_ObjectHideFlags: 0

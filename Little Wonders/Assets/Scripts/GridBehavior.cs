@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class GridBehavior : MonoBehaviour
@@ -14,6 +15,10 @@ public class GridBehavior : MonoBehaviour
     public Vector2Int size;
     public Cell[,] cells;
 
+    [Header("Random Attributes")]
+    private float sid;
+    [Range(0, 1)] public float freq, waterFreq, cowFreq, rockFreq, oilFreq;
+
     private void Start()
     {
         grid = GetComponent<Grid>();
@@ -21,7 +26,21 @@ public class GridBehavior : MonoBehaviour
         cells = new Cell[size.x, size.y];
 
         GenerateGrid();
+        
+        // startTime = Time.time;
     }
+
+    // private void Update()
+    // {
+    //     if (startTime + 0.3f <= Time.time) {
+    //         foreach (Cell cell in cells)
+    //             Destroy(cell.gameObject);
+            
+    //         GenerateGrid();
+
+    //         startTime = Time.time;
+    //     }
+    // }
 
     private void GenerateGrid()
     {
@@ -81,21 +100,29 @@ public class GridBehavior : MonoBehaviour
         _originCell.gameObject.SetActive(false);
     }
 
-    private GameObject GetRandomCell(float _PerlinNoise)
+    private float Noise(int x, int y)
     {
-        //float resultNoise = _PerlinNoise * (cellPrefabs.Count - 1);
-        //cellType = Mathf.RoundToInt(resultNoise);
-        //cellType = UnityEngine.Random.Range(0f,1f) > 0.2f ? 0 : cellType;
-        return cellPrefabs[UnityEngine.Random.Range(0, cellPrefabs.Count)];
+        return Mathf.PerlinNoise((x + sid) * freq, (y + sid) * freq);
     }
-
+    private int Biome(float e)
+    {
+        if (e < waterFreq) return 0;
+        else if (e < cowFreq) return 2;
+        else if (e < rockFreq) return 3;
+        else if (e < oilFreq) return 4;
+        
+        return 1;
+    }
+    private GameObject GetRandomCell(int x, int y)
+    {
+        float noise = Noise(x, y) + 0.5f * Noise(x, y) + 0.25f * Noise(x, y);
+        return cellPrefabs[Biome(noise)];
+    }
     private GameObject GetTerrain(int x, int y)
     {
-        float sid = UnityEngine.Random.Range(0f, 9999999f);
-        float zoom = 70f;
-        float perlinNoise = Mathf.PerlinNoise((x + sid) / zoom, (y + sid) / zoom);
+        sid = UnityEngine.Random.Range(0f, 9999999f);
         Vector3 position = grid.GetCellCenterWorld(new Vector3Int(x, y));
-        GameObject spawnedCell = Instantiate(GetRandomCell(perlinNoise), position, Quaternion.identity, transform);
+        GameObject spawnedCell = Instantiate(GetRandomCell(x, y), position, Quaternion.identity, transform);
         spawnedCell.name = "Tile" + x + y;
         return spawnedCell;
     }
